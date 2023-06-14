@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "synthesized-sdk.fullname" . }}-service
+  labels:
+    app.kubernetes.io/name: "{{ include "synthesized-sdk.fullname" . }}"
+    app.kubernetes.io/component: synthesized-sdk
+spec:
+  type: NodePort
+  selector:
+    tag: synth
+  ports:
+    - port: 8888
+      targetPort: 8888
+      nodePort: 30001

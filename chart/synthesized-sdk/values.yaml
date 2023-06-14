@@ -1,0 +1,47 @@
+# Default values for synthesized-tdk.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: synthesizedio/synthesized-notebook
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 2.3
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccountName: sdk
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+containerSecurityContext: {}
+
+resources:
+  limits:
+    cpu: 1
+    memory: 1Gi
+  requests:
+    cpu: 1
+    memory: 1Gi
+
+# -- Environment variables
+env: {}
+
+# -- Sensitive environment variables that will be rendered as a new secret object
+envRenderSecret: {}
+
+# -- Pass the configuration directives and envRenderSecret through Helm's templating engine.
+## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
+tplConfig: false
+
+# -- Reference to an external secret that contains sensitive environment variables
+# This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it.
+# If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content).
+secretRef:

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "synthesized-sdk.fullname" . }}-sdk
+  labels: &SdkDeploymentLabels
+    app.kubernetes.io/name: "{{ include "synthesized-sdk.fullname" . }}"
+    app.kubernetes.io/component: synthesized-sdk
+spec:
+  selector:
+    matchLabels: *SdkDeploymentLabels
+  replicas: 1
+  template:
+    metadata:
+      labels: *SdkDeploymentLabels
+    spec:
+      {{- if .Values.securityContext }}
+      securityContext:
+        {{- toYaml .Values.containerSecurityContext | nindent 8 }}
+      {{- end }}
+      serviceAccountName: "{{ .Values.serviceAccountName }}"
+      containers:
+        - name: sdk
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: sdk
+              containerPort: 8888
+              hostPort: 8888
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          {{- range $key, $val := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+          {{- end }}
+          envFrom:
+            - secretRef:
+              {{- if .Values.secretRef}}
+                name: {{ .Values.secretRef }}
+              {{- else}}
+                name: {{ include "synthesized-sdk.fullname" . }}-secret
+              {{- end}}
