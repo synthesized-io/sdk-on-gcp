@@ -1,25 +1,28 @@
 apiVersion: app.k8s.io/v1beta1
 kind: Application
 metadata:
-  name: "{{ .Release.Name }}"
+  name: {{ include "synthesized-sdk.fullname" . }}
   namespace: "{{ .Release.Namespace }}"
   labels:
-    app.kubernetes.io/name: "{{ .Release.Name }}"
+    app: {{ include "synthesized-sdk.fullname" . }}
+    name: {{ include "synthesized-sdk.fullname" . }}
+    component: app
   annotations:
-{{/*    TDOD */}}
     marketplace.cloud.google.com/deploy-info: '{"partner_id": "partner", "product_id": "wordpress", "partner_name": "Partner"}'
 spec:
   descriptor:
     type: SDK
-    version: 'v2.3'
+    version: '2.3'
   selector:
     matchLabels:
-      app.kubernetes.io/name: "{{ .Release.Name }}"
+      name: {{ include "synthesized-sdk.fullname" . }}
   addOwnerRef: true
   componentKinds:
     - group: v1
       kind: Secret
     - group: v1
       kind: Service
+    - group: v1
+      kind: Ingress
     - group: apps/v1
       kind: Deployment

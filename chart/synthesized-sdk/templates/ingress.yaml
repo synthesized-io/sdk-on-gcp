@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "synthesized-sdk.fullname" . }}-web
+  labels:
+    app: {{ include "synthesized-sdk.fullname" . }}
+    name: {{ include "synthesized-sdk.fullname" . }}
+spec:
+  defaultBackend:
+    service:
+      name: {{ include "synthesized-sdk.fullname" . }}-service
+      port:
+        name: web

@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: {{ include "synthesized-sdk.fullname" . }}-sdk
   labels: &SdkDeploymentLabels
-    app.kubernetes.io/name: "{{ include "synthesized-sdk.fullname" . }}"
-    app.kubernetes.io/component: synthesized-sdk
+    app: "{{ include "synthesized-sdk.fullname" . }}"
+    name: "{{ include "synthesized-sdk.fullname" . }}"
 spec:
   selector:
     matchLabels: *SdkDeploymentLabels
