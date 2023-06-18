@@ -58,7 +58,7 @@ gcloud container clusters get-credentials "${CLUSTER}" --zone "${ZONE}"
 Clone this repo, as well as its associated tools repo:
 
 ```shell
-git clone --recursive git@github.com:synthesized-io/sdk-on-gcp.git
+git clone --recursive https://github.com/synthesized-io/sdk-on-gcp.git
 ```
 
 #### Installing the Application resource definition
@@ -100,9 +100,6 @@ Example:
 ```shell
 export TAG="2.3"
 ```
-
-> Warning: This tag is not stable, and the image that it references
-> might change over time.
 
 Configure the container images:
 

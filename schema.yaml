@@ -2,14 +2,22 @@ x-google-marketplace:
   schemaVersion: v2
 
   applicationApiVersion: v1beta1
-  # The published version is required and MUST match the tag
-  # of the deployer image
-  publishedVersion: 'v2.3'
+
+  publishedVersion: "$TAG"
   publishedVersionMetadata:
     releaseNote: >-
-      A first release.
-  # The images property will be filled in during part 2
-  images: {}
+      Initial release.
+    releaseTypes:
+      - Feature
+    recommended: false
+
+  images:
+    '':
+      properties:
+        sdk.image.repo:
+          type: REPO_WITH_REGISTRY
+        sdk.image.tag:
+          type: TAG
 
 properties:
   name:
@@ -24,3 +32,4 @@ properties:
 required:
   - name
   - namespace
+
