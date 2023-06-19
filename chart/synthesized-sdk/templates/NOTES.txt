@@ -1,1 +1,1 @@
-Synthesized SDK is Installed.
+Synthesized SDK + Jupyter Notebook were Installed.

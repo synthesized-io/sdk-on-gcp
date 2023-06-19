@@ -1,16 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "synthesized-sdk.fullname" . }}-service
+  name: {{ .Release.Name }}-service
   labels: &SdkServiceLabels
-    app: {{ include "synthesized-sdk.fullname" . }}
-    name: {{ include "synthesized-sdk.fullname" . }}
+    app: {{ .Release.Name }}
+    name: {{ .Release.Name }}
 spec:
   selector: *SdkServiceLabels
   ports:
-    - name: web
+    - name: http
       protocol: TCP
       port: 8888
       targetPort: 8888
-      nodePort: 30001
+  {{ if .Values.enablePublicServiceAndIngress }}
   type: NodePort
+  {{ else }}
+  type: ClusterIP
+  {{ end }}
+

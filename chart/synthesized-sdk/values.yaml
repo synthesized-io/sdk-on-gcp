@@ -11,7 +11,7 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-serviceAccountName: sdk
+serviceAccountName:
 
 securityContext: {}
   # capabilities:
@@ -45,3 +45,9 @@ tplConfig: false
 # This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it.
 # If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content).
 secretRef:
+
+enablePublicServiceAndIngress: false
+
+tls:
+  base64EncodedPrivateKey: null
+  base64EncodedCertificate: null

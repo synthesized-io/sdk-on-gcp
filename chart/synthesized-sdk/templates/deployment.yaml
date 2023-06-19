@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "synthesized-sdk.fullname" . }}-sdk
+  name: {{ .Release.Name }}-sdk
   labels: &SdkDeploymentLabels
-    app: "{{ include "synthesized-sdk.fullname" . }}"
-    name: "{{ include "synthesized-sdk.fullname" . }}"
+    app: "{{ .Release.Name }}"
+    name: "{{ .Release.Name }}"
 spec:
   selector:
     matchLabels: *SdkDeploymentLabels
@@ -22,9 +22,9 @@ spec:
         - name: sdk
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - name: sdk
-              containerPort: 8888
-              hostPort: 8888
+            - name: http
+              containerPort: 80
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -37,5 +37,5 @@ spec:
               {{- if .Values.secretRef}}
                 name: {{ .Values.secretRef }}
               {{- else}}
-                name: {{ include "synthesized-sdk.fullname" . }}-secret
+                name: {{ .Release.Name }}-secret
               {{- end}}
