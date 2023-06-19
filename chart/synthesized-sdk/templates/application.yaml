@@ -12,20 +12,20 @@ spec:
   descriptor:
     type: SDK
     version: '2.3'
-{{/*  info:*/}}
-{{/*  {{ if .Values.enablePublicServiceAndIngress -}}*/}}
-{{/*    - name: Jupyter Notebook Webserver address*/}}
-{{/*      type: Reference*/}}
-{{/*      valueFrom:*/}}
-{{/*        ingressRef:*/}}
-{{/*          name: {{ .Release.Name }}-service*/}}
-{{/*          protocol: HTTPS*/}}
-{{/*  {{- else -}}*/}}
-{{/*    - name: Forward Jupyter Notebook Webserver port locally*/}}
-{{/*      value: kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ .Release.Name }}-service 8888:8888*/}}
-{{/*    - name: Jupyter Notebook Webserver address (local only)*/}}
-{{/*      value: "http://localhost:8888/"*/}}
-{{/*  {{- end }}*/}}
+  info:
+    {{ if .Values.enablePublicServiceAndIngress -}}
+    - name: Jupyter Notebook Webserver address
+      type: Reference
+      valueFrom:
+        ingressRef:
+          name: {{ .Release.Name }}-service
+          protocol: HTTPS
+    {{- else -}}
+    - name: Forward Jupyter Notebook Webserver port locally
+      value: kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ .Release.Name }}-service 8888:8888
+    - name: Jupyter Notebook Webserver address (local only)
+      value: "http://localhost:8888/"
+    {{- end }}
   selector:
     matchLabels:
       name: {{ .Release.Name }}
