@@ -11,13 +11,13 @@ x-google-marketplace:
       - Feature
     recommended: false
 
-  images:
-    '':
-      properties:
-        sdk.image.repo:
-          type: synthesizedio/synthesized-notebook
-        sdk.image.tag:
-          type: 2.3
+#  images:
+#    '':
+#      properties:
+#        sdk-jupyter.image.repo:
+#          type: REPO_WITH_REGISTRY
+#        sdk-jupyter.image.tag:
+#          type: TAG
 
 properties:
   name:
