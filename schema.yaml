@@ -3,7 +3,7 @@ x-google-marketplace:
 
   applicationApiVersion: v1beta1
 
-  publishedVersion: 2.3
+  publishedVersion: "$TAG"
   publishedVersionMetadata:
     releaseNote: >-
       Initial release.
@@ -17,7 +17,7 @@ x-google-marketplace:
         sdk.image.repo:
           type: synthesizedio/synthesized-notebook
         sdk.image.tag:
-          type: 2.3
+          type: "$TAG"
 
 properties:
   name:
