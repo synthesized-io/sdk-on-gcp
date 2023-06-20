@@ -1,0 +1,8 @@
+actions:
+- name: SDK listening
+  bashTest:
+    script: |-
+      curl http://$APP_INSTANCE_NAME-service.$NAMESPACE.svc.cluster.local:30001
+    expect:
+      stdout:
+        contains: 'login'
