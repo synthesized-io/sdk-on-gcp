@@ -11,7 +11,7 @@ metadata:
 spec:
   descriptor:
     type: SDK
-    version: '0.0.4'
+    version: '0.0.5'
   info:
     {{ if .Values.enablePublicServiceAndIngress -}}
     - name: Jupyter Notebook Webserver address

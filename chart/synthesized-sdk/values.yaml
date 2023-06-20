@@ -25,11 +25,11 @@ containerSecurityContext: {}
 
 resources:
   limits:
-    cpu: 1
-    memory: 1Gi
+    cpu: 0.2
+    memory: 128Mi
   requests:
-    cpu: 1
-    memory: 1Gi
+    cpu: 0.2
+    memory: 128Mi
 
 # -- Environment variables
 env: {}
