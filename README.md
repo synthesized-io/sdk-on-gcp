@@ -137,6 +137,9 @@ expanded manifest file for future updates to your app.
 helm template chart/synthesized-sdk \
   --name "${APP_INSTANCE_NAME}" \
   --namespace "${NAMESPACE}" \
+  --set envRenderSecret.SYNTHESIZED_KEY "${SYNTHESIZED_KEY}" \
+  --set image.repository="${SYNTHESIZED_IMAGE}" \
+  --set image.tag="${SYNTHESIZED_TRACK}" \
   > "${APP_INSTANCE_NAME}_manifest.yaml"
 ```
 
@@ -173,6 +176,10 @@ command:
 
 This is a single-instance version of SDK. It is not intended to be scaled
 up with its current configuration.
+
+# App metrics
+
+At the moment, the application does not support exporting Prometheus metrics and does not have any exporter.
 
 # Uninstalling the app
 
@@ -218,7 +225,7 @@ types and a label:
 ```shell
 kubectl delete application,deployment,secret,service,ingress \
   --namespace ${NAMESPACE} \
-  --selector app.kubernetes.io/name=${APP_INSTANCE_NAME}
+  --selector name=${APP_INSTANCE_NAME}
 ```
 
 # Upgrading the app
