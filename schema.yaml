@@ -17,7 +17,7 @@ x-google-marketplace:
         sdk.image.repo:
           type: synthesizedio/synthesized-notebook
         sdk.image.tag:
-          type: "$TAG"
+          type: 2.3
 
 properties:
   name:
