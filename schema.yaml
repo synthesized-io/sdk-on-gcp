@@ -3,7 +3,7 @@ x-google-marketplace:
 
   applicationApiVersion: v1beta1
 
-  publishedVersion: "$TAG"
+  publishedVersion: 2.3
   publishedVersionMetadata:
     releaseNote: >-
       Initial release.
