@@ -11,13 +11,13 @@ x-google-marketplace:
       - Feature
     recommended: false
 
-#  images:
-#    '':
-#      properties:
-#        sdk-jupyter.image.repo:
-#          type: REPO_WITH_REGISTRY
-#        sdk-jupyter.image.tag:
-#          type: TAG
+  images:
+    '':
+      properties:
+        sdk-jupyter.image.repo:
+          type: REPO_WITH_REGISTRY
+        sdk-jupyter.image.tag:
+          type: TAG
 
 properties:
   name:
