@@ -25,10 +25,10 @@ containerSecurityContext: {}
 
 resources:
   limits:
-    cpu: 1
+    cpu: 0.5
     memory: 1Gi
   requests:
-    cpu: 1
+    cpu: 0.5
     memory: 1Gi
 
 # -- Environment variables
@@ -46,8 +46,12 @@ tplConfig: false
 # If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content).
 secretRef:
 
-enablePublicServiceAndIngress: false
+enablePublicServiceAndIngress: true
 
 tls:
+  # Required value can be derived from a PEM file by using the following command:
+  # cat <key>.pem | base64 | td -r '\n\r'
   base64EncodedPrivateKey: null
+  #  Required value can be derived from a PEM file by using the following command:
+  # cat <cert>.pem | base64 | td -r '\n\r'
   base64EncodedCertificate: null
