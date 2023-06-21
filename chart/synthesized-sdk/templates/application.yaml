@@ -7,11 +7,11 @@ metadata:
     app: {{ .Release.Name }}
     name: {{ .Release.Name }}
   annotations:
-    marketplace.cloud.google.com/deploy-info: '{"partner_id": "partner", "product_id": "wordpress", "partner_name": "Partner"}'
+    marketplace.cloud.google.com/deploy-info: '{"partner_id": "synthesized.io", "product_id": "synthesized-sdk-notebook-byol", "partner_name": "synthesized"}'
 spec:
   descriptor:
     type: SDK
-    version: '0.0.6'
+    version: "{{ .Values.image.tag }}"
   info:
     {{ if .Values.enablePublicServiceAndIngress -}}
     - name: Jupyter Notebook Webserver address
