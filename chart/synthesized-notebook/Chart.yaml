@@ -1,5 +1,5 @@
 apiVersion: v2
-name: synthesized-sdk
+name: synthesized-notebook
 description: The SDK generates high quality, privacy-preserving datasets for machine learning and data science use cases.
 
 # A chart can be either an 'application' or a 'library' chart.

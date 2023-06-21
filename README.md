@@ -90,7 +90,7 @@ Choose an instance name and
 for the app. In most cases, you can use the `default` namespace.
 
 ```shell
-export APP_INSTANCE_NAME=synthesized-sdk
+export APP_INSTANCE_NAME=synthesized-notebook
 export NAMESPACE=default
 ```
 
@@ -134,7 +134,7 @@ Use `helm template` to expand the template. We recommend that you save the
 expanded manifest file for future updates to your app.
 
 ```shell
-helm template chart/synthesized-sdk \
+helm template chart/synthesized-notebook \
   --name "${APP_INSTANCE_NAME}" \
   --namespace "${NAMESPACE}" \
   --set envRenderSecret.SYNTHESIZED_KEY "${SYNTHESIZED_KEY}" \
@@ -199,7 +199,7 @@ At the moment, the application does not support exporting Prometheus metrics and
 Set your installation name and Kubernetes namespace:
 
 ```shell
-export APP_INSTANCE_NAME=synthesized-sdk
+export APP_INSTANCE_NAME=synthesized-notebook
 export NAMESPACE=default
 ```
 
@@ -238,7 +238,7 @@ Synthesized SDK Docker image.
 Set your environment variables to match the installation properties:
 
 ```shell
-export APP_INSTANCE_NAME=synthesized-sdk
+export APP_INSTANCE_NAME=synthesized-notebook
 export NAMESPACE=default
 ```
 

@@ -1,8 +1,7 @@
 actions:
-- name: SDK listening
-  bashTest:
-    script: |-
-      curl http://$APP_INSTANCE_NAME-service.$NAMESPACE.svc.cluster.local:30001
-    expect:
-      stdout:
-        contains: 'login'
+  - name: Wait for the webserver get ready
+    bashTest:
+      script: kubectl wait --for=condition=Available=True --timeout=120s --namespace $NAMESPACE deploy "${APP_INSTANCE_NAME}-web"
+      expect:
+        exitCode:
+          equals: 0
