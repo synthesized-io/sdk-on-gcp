@@ -2,19 +2,16 @@
 
 Synthesized SDK generates high quality, privacy-preserving datasets for machine learning and data science use cases.
 
-[//]: # (Available on the GCP Cloud Marketplace: TODO)
+Available on the GCP Cloud Marketplace: TODO
 
-## Architecture
-
-[//]: # (TODO)
+This delivery contains the SDK bundled up with a Jupyter notebook. This provides an easy platform to start working with synthetic data.
 
 # Installation
 
 ## Quick install with Google Cloud Marketplace
 
-To install Synthesized SDK to a Google
-
-[//]: # (Kubernetes Engine cluster via Google Cloud Marketplace, follow these instructions: TODO)
+To install Synthesized SDK Jupyter Notebook to a Google Kubernetes Engine cluster via Google Cloud Marketplace, follow the
+[on-screen instructions](TODO).
 
 ## Command-line instructions
 
@@ -98,14 +95,27 @@ Set up the image tag.
 Example:
 
 ```shell
-export TAG="2.3"
+export TAG="2.3.0"
 ```
 
 Configure the container images:
 
 ```shell
-#TODO
-#export IMAGE_REGISTRY="marketplace.gcr.io/google"
+export IMAGE_REGISTRY="gcr.io/synthesized-public/synthesized-notebook"
+```
+
+Configure the Synthesized licence key:
+
+```shell
+export SYNTHESIZED_KEY=[YOUR KEY]
+```
+
+(Optional) Expose the Service externally and configure Ingress:
+
+By default, the Service is exposed without TLS configuration. To disable this option, change the value to false.
+
+```shell
+export PUBLIC_SERVICE_AND_INGRESS_ENABLED=false
 ```
 
 #### Creating namespace in your Kubernetes cluster
@@ -128,6 +138,30 @@ kubectl create clusterrole "${SDK_SERVICE_ACCOUNT}-role" --verb=get,list,watch -
 kubectl create clusterrolebinding "${SDK_SERVICE_ACCOUNT}-rule" --clusterrole="${SDK_SERVICE_ACCOUNT}-role" --serviceaccount="${NAMESPACE}:${SDK_SERVICE_ACCOUNT}"
 ```
 
+#### Create TLS certificate
+
+> Note: You can skip this step if you have not set up external access.
+
+1.  If you already have a certificate that you want to use, copy your
+    certificate and key pair to the `/tmp/tls.crt`, and `/tmp/tls.key` files,
+    then skip to the next step.
+
+    To create a new certificate, run the following command:
+
+    ```shell
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -keyout /tmp/tls.key \
+        -out /tmp/tls.crt \
+        -subj "/CN=synthesized/O=synthesized"
+    ```
+
+2.  Set `TLS_CERTIFICATE_KEY` and `TLS_CERTIFICATE_CRT` variables:
+
+    ```shell
+    export TLS_CERTIFICATE_KEY="$(cat /tmp/tls.key | base64)"
+    export TLS_CERTIFICATE_CRT="$(cat /tmp/tls.crt | base64)"
+    ```
+
 #### Expanding the manifest template
 
 Use `helm template` to expand the template. We recommend that you save the
@@ -138,8 +172,9 @@ helm template chart/synthesized-notebook \
   --name "${APP_INSTANCE_NAME}" \
   --namespace "${NAMESPACE}" \
   --set envRenderSecret.SYNTHESIZED_KEY "${SYNTHESIZED_KEY}" \
-  --set image.repository="${SYNTHESIZED_IMAGE}" \
-  --set image.tag="${SYNTHESIZED_TRACK}" \
+  --set image.repository="${IMAGE_REGISTRY}" \
+  --set image.tag="${TAG}" \
+  --set enablePublicServiceAndIngress="${PUBLIC_SERVICE_AND_INGRESS_ENABLED}" \
   > "${APP_INSTANCE_NAME}_manifest.yaml"
 ```
 
@@ -163,18 +198,41 @@ To view the app, open the URL in your browser.
 
 ### Accessing the User Interface
 
-To get the external IP address of SDK, use the following
-command:
+To get the external IP of Jupyter Notebook website, use the following command:
 
-[//]: # (TODO)
+```shell
+SERVICE_IP=$(kubectl get ingress "${APP_INSTANCE_NAME}-sdk" \
+  --namespace "${NAMESPACE}" \
+  --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-[//]: # (```shell)
+echo "https://${SERVICE_IP}/"
+```
+The command shows you the URL of your site. In case you don't have Ingress Controller and didn't set `enablePublicServiceAndIngress`, you can expose Webserver port:
 
-[//]: # (```)
+```shell
+kubectl expose deploy "${APP_INSTANCE_NAME}-sdk" \
+  --namespace "${NAMESPACE}" \
+  --type=LoadBalancer --name=sdk-lb
+SERVICE_IP=$(kubectl get svc sdk-lb \
+  --namespace "${NAMESPACE}" \
+  --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+echo "http://${SERVICE_IP}/"
+```
+
+# Using the app
+
+## How to use Synthesized Jupyter Notebook
+
+* Open the demo notebook or create a new notebook
+* Inside the notebook, if you did not set your license key earlier, ensure you set the license key by adding the following at the top: `import os; os.environ["SYNTHESIZED_KEY"] = <INSERT_KEY_HERE>`
+* Now synthesized can be imported into the notebook, data can be loaded, a synthesizer trained, and synthetic data generated as explained in the quickstart guide in [Synthesized’s docs](https://docs.synthesized.io/sdk/latest/getting_started/quickstarts/tabular)
+* After data has been generated, it can be saved to a permanent location using standard python libraries and functions. To save files to gcp for example follow instructions [here](https://cloud.google.com/appengine/docs/legacy/standard/python/googlecloudstorageclient/read-write-to-cloud-storage)
+
 
 # Scaling
 
-This is a single-instance version of SDK. It is not intended to be scaled
+This is a single-instance version of SDK Jupyter Notebook. It is not intended to be scaled
 up with its current configuration.
 
 # App metrics
@@ -223,25 +281,7 @@ If you don't have the expanded manifest file, delete the resources by using
 types and a label:
 
 ```shell
-kubectl delete application,deployment,secret,service,ingress \
+kubectl delete application,deployment,secret,service,ingress,backendconfig \
   --namespace ${NAMESPACE} \
   --selector name=${APP_INSTANCE_NAME}
 ```
-
-# Upgrading the app
-
-## Preparing your environment
-
-The steps below describe the upgrade procedure with the new version of the
-Synthesized SDK Docker image.
-
-Set your environment variables to match the installation properties:
-
-```shell
-export APP_INSTANCE_NAME=synthesized-notebook
-export NAMESPACE=default
-```
-
-## Upgrading your app
-
-[//]: # (TOOD)

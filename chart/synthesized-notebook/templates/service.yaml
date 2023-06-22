@@ -6,7 +6,7 @@ metadata:
     app: {{ .Release.Name }}
     name: {{ .Release.Name }}
   annotations:
-    cloud.google.com/backend-config: '{"default": "sdk-jupyter-backendconfig"}'
+    cloud.google.com/backend-config: '{"default": "{{ .Release.Name }}-backendconfig"}'
 spec:
   selector: *SdkServiceLabels
   ports:
