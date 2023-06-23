@@ -1,17 +1,17 @@
 # Overview
 
-Synthesized SDK generates high quality, privacy-preserving datasets for machine learning and data science use cases.
-
-Available on the GCP Cloud Marketplace: TODO
+Synthesized Scientific Data Kit (SDK) is a comprehensive framework for generative modelling for structured data (tabular, time-series and event-based data). The SDK helps you create compliant statistical-preserving data snapshots for BI/Analytics and ML/AI applications. Right-size your data with AI-supported data transformations.
 
 This delivery contains the SDK bundled up with a Jupyter notebook. This provides an easy platform to start working with synthetic data.
+
+Available on the GCP Cloud Marketplace: https://console.cloud.google.com/marketplace/product/synthesized-public/synthesized-sdk-notebook-byol
 
 # Installation
 
 ## Quick install with Google Cloud Marketplace
 
 To install Synthesized SDK Jupyter Notebook to a Google Kubernetes Engine cluster via Google Cloud Marketplace, follow the
-[on-screen instructions](TODO).
+[on-screen instructions](https://console.cloud.google.com/marketplace/product/synthesized-public/synthesized-sdk-notebook-byol).
 
 ## Command-line instructions
 
