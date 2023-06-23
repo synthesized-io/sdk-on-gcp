@@ -118,6 +118,13 @@ By default, the Service is exposed without TLS configuration. To disable this op
 export PUBLIC_SERVICE_AND_INGRESS_ENABLED=false
 ```
 
+(Optional) Set computation resources limit:
+
+```shell
+export RESOURCES_LIMITS_CPU=1
+export RESOURCES_LIMITS_MEMORY=1Gi
+```
+
 #### Creating namespace in your Kubernetes cluster
 
 If you use a different namespace than the `default`, create a new namespace by
@@ -169,12 +176,16 @@ expanded manifest file for future updates to your app.
 
 ```shell
 helm template chart/synthesized-notebook \
-  --name "${APP_INSTANCE_NAME}" \
+  --name-template "${APP_INSTANCE_NAME}" \
   --namespace "${NAMESPACE}" \
   --set envRenderSecret.SYNTHESIZED_KEY "${SYNTHESIZED_KEY}" \
   --set image.repository="${IMAGE_REGISTRY}" \
   --set image.tag="${TAG}" \
   --set enablePublicServiceAndIngress="${PUBLIC_SERVICE_AND_INGRESS_ENABLED}" \
+  --set tls.base64EncodedPrivateKey="${TLS_CERTIFICATE_KEY}" \
+  --set tls.base64EncodedCertificate="${TLS_CERTIFICATE_CRT}" \
+  --set resources.limits.cpu="${RESOURCES_LIMITS_CPU}" \
+  --set resources.limits.memory="${RESOURCES_LIMITS_MEMORY}" \
   > "${APP_INSTANCE_NAME}_manifest.yaml"
 ```
 
@@ -201,7 +212,7 @@ To view the app, open the URL in your browser.
 To get the external IP of Jupyter Notebook website, use the following command:
 
 ```shell
-SERVICE_IP=$(kubectl get ingress "${APP_INSTANCE_NAME}-sdk" \
+SERVICE_IP=$(kubectl get ingress "${APP_INSTANCE_NAME}-web" \
   --namespace "${NAMESPACE}" \
   --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
