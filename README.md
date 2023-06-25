@@ -87,7 +87,7 @@ Choose an instance name and
 for the app. In most cases, you can use the `default` namespace.
 
 ```shell
-export APP_INSTANCE_NAME=synthesized-notebook
+export APP_INSTANCE_NAME=sdk-jupyter-server
 export NAMESPACE=default
 ```
 
@@ -95,13 +95,13 @@ Set up the image tag.
 Example:
 
 ```shell
-export TAG="2.3.0"
+export TAG="2.7"
 ```
 
 Configure the container images:
 
 ```shell
-export IMAGE_REGISTRY="gcr.io/synthesized-public/synthesized-notebook"
+export IMAGE_REGISTRY="gcr.io/synthesized-public/sdk-jupyter-server"
 ```
 
 Configure the Synthesized licence key:
@@ -175,7 +175,7 @@ Use `helm template` to expand the template. We recommend that you save the
 expanded manifest file for future updates to your app.
 
 ```shell
-helm template chart/synthesized-notebook \
+helm template chart/sdk-jupyter-server \
   --name-template "${APP_INSTANCE_NAME}" \
   --namespace "${NAMESPACE}" \
   --set envRenderSecret.SYNTHESIZED_KEY "${SYNTHESIZED_KEY}" \
@@ -268,7 +268,7 @@ At the moment, the application does not support exporting Prometheus metrics and
 Set your installation name and Kubernetes namespace:
 
 ```shell
-export APP_INSTANCE_NAME=synthesized-notebook
+export APP_INSTANCE_NAME=sdk-jupyter-server
 export NAMESPACE=default
 ```
 
