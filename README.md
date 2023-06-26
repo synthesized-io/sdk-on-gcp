@@ -177,14 +177,10 @@ To view the app, open the URL in your browser.
 You can expose Jupyter Web Server port:
 
 ```shell
-kubectl expose deploy "${APP_INSTANCE_NAME}-sdk" \
-  --namespace "${NAMESPACE}" \
-  --type=LoadBalancer --name=sdk-lb
-SERVICE_IP=$(kubectl get svc sdk-lb \
-  --namespace "${NAMESPACE}" \
-  --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-echo "http://${SERVICE_IP}/"
+kubectl port-forward \
+    --namespace "${NAMESPACE}" \
+    svc/${APP_INSTANCE_NAME}-service \
+    8888:8888
 ```
 
 # Using the app
