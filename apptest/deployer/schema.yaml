@@ -4,12 +4,3 @@ properties:
     default: $REGISTRY/tester:$TAG
     x-google-property:
       type: IMAGE
-  tls.base64EncodedPrivateKey:
-    type: string
-    default: null
-  tls.base64EncodedCertificate:
-    type: string
-    default: null
-  enablePublicServiceAndIngress:
-    type: boolean
-    default: false
