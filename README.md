@@ -95,7 +95,7 @@ Set up the image tag.
 Example:
 
 ```shell
-export TAG="2.7"
+export TAG="2.7.0"
 ```
 
 Configure the container images:
@@ -108,14 +108,6 @@ Configure the Synthesized licence key:
 
 ```shell
 export SYNTHESIZED_KEY=[YOUR KEY]
-```
-
-(Optional) Expose the Service externally and configure Ingress:
-
-By default, the Service is exposed without TLS configuration. To disable this option, change the value to false.
-
-```shell
-export PUBLIC_SERVICE_AND_INGRESS_ENABLED=false
 ```
 
 (Optional) Set computation resources limit:
@@ -145,30 +137,6 @@ kubectl create clusterrole "${SDK_SERVICE_ACCOUNT}-role" --verb=get,list,watch -
 kubectl create clusterrolebinding "${SDK_SERVICE_ACCOUNT}-rule" --clusterrole="${SDK_SERVICE_ACCOUNT}-role" --serviceaccount="${NAMESPACE}:${SDK_SERVICE_ACCOUNT}"
 ```
 
-#### Create TLS certificate
-
-> Note: You can skip this step if you have not set up external access.
-
-1.  If you already have a certificate that you want to use, copy your
-    certificate and key pair to the `/tmp/tls.crt`, and `/tmp/tls.key` files,
-    then skip to the next step.
-
-    To create a new certificate, run the following command:
-
-    ```shell
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-        -keyout /tmp/tls.key \
-        -out /tmp/tls.crt \
-        -subj "/CN=synthesized/O=synthesized"
-    ```
-
-2.  Set `TLS_CERTIFICATE_KEY` and `TLS_CERTIFICATE_CRT` variables:
-
-    ```shell
-    export TLS_CERTIFICATE_KEY="$(cat /tmp/tls.key | base64)"
-    export TLS_CERTIFICATE_CRT="$(cat /tmp/tls.crt | base64)"
-    ```
-
 #### Expanding the manifest template
 
 Use `helm template` to expand the template. We recommend that you save the
@@ -181,9 +149,6 @@ helm template chart/sdk-jupyter-server \
   --set envRenderSecret.SYNTHESIZED_KEY "${SYNTHESIZED_KEY}" \
   --set image.repository="${IMAGE_REGISTRY}" \
   --set image.tag="${TAG}" \
-  --set enablePublicServiceAndIngress="${PUBLIC_SERVICE_AND_INGRESS_ENABLED}" \
-  --set tls.base64EncodedPrivateKey="${TLS_CERTIFICATE_KEY}" \
-  --set tls.base64EncodedCertificate="${TLS_CERTIFICATE_CRT}" \
   --set resources.limits.cpu="${RESOURCES_LIMITS_CPU}" \
   --set resources.limits.memory="${RESOURCES_LIMITS_MEMORY}" \
   > "${APP_INSTANCE_NAME}_manifest.yaml"
@@ -209,16 +174,7 @@ To view the app, open the URL in your browser.
 
 ### Accessing the User Interface
 
-To get the external IP of Jupyter Notebook website, use the following command:
-
-```shell
-SERVICE_IP=$(kubectl get ingress "${APP_INSTANCE_NAME}-web" \
-  --namespace "${NAMESPACE}" \
-  --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-echo "https://${SERVICE_IP}/"
-```
-The command shows you the URL of your site. In case you don't have Ingress Controller and didn't set `enablePublicServiceAndIngress`, you can expose Webserver port:
+You can expose Jupyter Web Server port:
 
 ```shell
 kubectl expose deploy "${APP_INSTANCE_NAME}-sdk" \
@@ -292,7 +248,7 @@ If you don't have the expanded manifest file, delete the resources by using
 types and a label:
 
 ```shell
-kubectl delete application,deployment,secret,service,ingress,backendconfig \
+kubectl delete application,deployment,secret,service,backendconfig \
   --namespace ${NAMESPACE} \
   --selector name=${APP_INSTANCE_NAME}
 ```

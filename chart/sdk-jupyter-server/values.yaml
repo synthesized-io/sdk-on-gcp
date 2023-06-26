@@ -47,13 +47,3 @@ tplConfig: false
 # This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it.
 # If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content).
 secretRef:
-
-enablePublicServiceAndIngress: true
-
-tls:
-  # Required value can be derived from a PEM file by using the following command:
-  # cat <key>.pem | base64 | td -r '\n\r'
-  base64EncodedPrivateKey: null
-  #  Required value can be derived from a PEM file by using the following command:
-  # cat <cert>.pem | base64 | td -r '\n\r'
-  base64EncodedCertificate: null

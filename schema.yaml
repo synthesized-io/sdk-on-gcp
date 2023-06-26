@@ -56,19 +56,6 @@ properties:
               - apiGroups: [ "" ]
                 resources: [ "pods/exec" ]
                 verbs: [ "create", "get" ]
-  enablePublicServiceAndIngress:
-    type: boolean
-    title: Enable public IP access
-    description: Set the SDK Jupyter Service type to NodePort and enable Ingress
-    default: true
-  certificate:
-    type: string
-    x-google-marketplace:
-      type: TLS_CERTIFICATE
-      tlsCertificate:
-        generatedProperties:
-          base64EncodedPrivateKey: tls.base64EncodedPrivateKey
-          base64EncodedCertificate: tls.base64EncodedCertificate
   resources.limits.cpu:
     type: string
     default: null

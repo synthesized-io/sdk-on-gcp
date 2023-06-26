@@ -22,19 +22,6 @@ spec:
       - description: 'User Guide'
         url: https://github.com/synthesized-io/sdk-on-gcp/blob/main/README.md
     notes: |-
-      # Access the web server
-      {{ if .Values.enablePublicServiceAndIngress -}}
-      # Open your web server
-      To get the external IP of your web server, use the following command:
-
-      ```
-      SERVICE_IP=$(kubectl get ingress {{ .Release.Name }}-service \
-        --namespace {{ .Release.Namespace }} \
-        --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-      echo "https://${SERVICE_IP}/"
-      ```
-      {{- else -}}
       # Open your web server
 
       SDK Notebook is exposed by the ClusterIP-only service `{{ .Release.Name }}-service`. To connect to the
@@ -54,21 +41,11 @@ spec:
       ```
 
       Now you can access the Webserver with [http://localhost:8888](http://localhost:8888).
-      {{- end }}
   info:
-    {{ if .Values.enablePublicServiceAndIngress -}}
-    - name: Jupyter Notebook Webserver address
-      type: Reference
-      valueFrom:
-        ingressRef:
-          name: {{ .Release.Name }}-service
-          protocol: HTTPS
-    {{- else -}}
     - name: Forward Jupyter Notebook Webserver port locally
       value: kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ .Release.Name }}-service 8888:8888
     - name: Jupyter Notebook Webserver address (local only)
       value: "http://localhost:8888/"
-    {{- end }}
   selector:
     matchLabels:
       name: {{ .Release.Name }}
@@ -78,10 +55,6 @@ spec:
       kind: Secret
     - group: v1
       kind: Service
-    {{ if .Values.enablePublicServiceAndIngress }}
-    - group: networking.k8s.io
-      kind: Ingress
-    {{ end }}
     - group: apps/v1
       kind: Deployment
     - group: app.k8s.io/v1beta1
