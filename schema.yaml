@@ -68,14 +68,6 @@ properties:
     title: Memory limit for each server instance
     description: Not set by default. If you'd like a custom value, you can specify an override here.
     pattern: '^([+-]?[0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$'
-  certificate:
-    type: string
-    x-google-marketplace:
-      type: TLS_CERTIFICATE
-      tlsCertificate:
-        generatedProperties:
-          base64EncodedPrivateKey: tls.base64EncodedPrivateKey
-          base64EncodedCertificate: tls.base64EncodedCertificate
 
 required:
   - name
