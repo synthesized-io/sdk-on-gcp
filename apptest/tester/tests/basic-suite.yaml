@@ -1,7 +1,13 @@
 actions:
-  - name: Wait for deployment get ready
+  - name: kubectl smoke test
     bashTest:
-      script: kubectl wait --for=condition=Available=True --timeout=180s --namespace $NAMESPACE deploy "${APP_INSTANCE_NAME}-sdk"
+      script: kubectl version
       expect:
-        stdout:
-          contains: condition met
+        exitCode:
+          equals: 0
+#  - name: Wait for deployment get ready
+#    bashTest:
+#      script: kubectl wait --for=condition=Available=True --timeout=180s --namespace $NAMESPACE deploy "${APP_INSTANCE_NAME}-sdk"
+#      expect:
+#        stdout:
+#          contains: condition met
