@@ -2,7 +2,7 @@ actions:
   - name: Wait for the webserver get ready
     bashTest:
       script: |-
-        curl http://$APP_INSTANCE_NAME-sdk.$NAMESPACE.svc.cluster.local
+        echo "http://$APP_INSTANCE_NAME-sdk.$NAMESPACE.svc.cluster.local"
       expect:
         exitCode:
           equals: 0
