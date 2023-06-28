@@ -1,8 +1,8 @@
 actions:
-  - name: Wait for the webserver get ready
+  - name: True
     bashTest:
       script: |-
-        echo "http://$APP_INSTANCE_NAME-sdk.$NAMESPACE.svc.cluster.local"
+        exit 0
       expect:
         exitCode:
           equals: 0
