@@ -8,8 +8,7 @@ actions:
   - name: Wait for deployment get ready
     bashTest:
       script: |
-        echo "${APP_INSTANCE_NAME}-sdk, $NAMESPACE"
-        kubectl wait --for=condition=Available=True --timeout=180s --namespace $NAMESPACE deploy ${APP_INSTANCE_NAME}-sdk
+        kubectl wait --for=condition=Available=True --timeout=120s --namespace $NAMESPACE deploy sdk-jupyter
       expect:
         stdout:
           contains: condition met
