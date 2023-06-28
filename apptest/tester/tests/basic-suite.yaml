@@ -1,8 +1,7 @@
 actions:
-  - name: True
+  - name: Wait for deployment get ready
     bashTest:
-      script: |-
-        exit 0
+      script: kubectl wait --for=condition=Available=True --timeout=120s --namespace $NAMESPACE deploy "${APP_INSTANCE_NAME}-sdk"
       expect:
         exitCode:
           equals: 0
