@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sdk-jupyter
+  name: {{ .Release.Name }}-sdk
   labels: &SdkDeploymentLabels
     app: "{{ .Release.Name }}"
     name: "{{ .Release.Name }}"
