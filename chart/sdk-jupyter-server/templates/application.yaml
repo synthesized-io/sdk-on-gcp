@@ -6,8 +6,6 @@ metadata:
   labels:
     app: {{ .Release.Name }}
     name: {{ .Release.Name }}
-  annotations:
-    marketplace.cloud.google.com/deploy-info: '{"partner_id": "synthesized-public", "product_id": "synthesized-sdk-notebook-byol", "partner_name": "synthesized"}'
 spec:
   descriptor:
     type: SDK
