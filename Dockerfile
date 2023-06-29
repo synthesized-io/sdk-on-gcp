@@ -16,7 +16,6 @@ RUN cd /tmp/test \
 
 ADD schema.yaml /tmp/schema.yaml
 
-# Provide registry prefix and tag for default values for images.
 ARG REGISTRY
 ARG TAG
 
@@ -32,6 +31,10 @@ RUN cat /tmp/apptest/schema.yaml \
     && mv /tmp/apptest/schema.yaml.new /tmp/apptest/schema.yaml
 
 FROM gcr.io/cloud-marketplace-tools/k8s/deployer_helm:$MARKETPLACE_TOOLS_TAG
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends dnsutils netcat \
+    && rm -rf /var/lib/apt/lists/*
 
 ARG CHART_NAME
 

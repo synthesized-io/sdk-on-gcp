@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "synthesized-sdk.name" -}}
+{{- define "sdk-jupyter-server.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "synthesized-sdk.fullname" -}}
+{{- define "sdk-jupyter-server.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "synthesized-sdk.chart" -}}
+{{- define "sdk-jupyter-server.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "synthesized-sdk.labels" -}}
-helm.sh/chart: {{ include "synthesized-sdk.chart" . }}
-{{ include "synthesized-sdk.selectorLabels" . }}
+{{- define "sdk-jupyter-server.labels" -}}
+helm.sh/chart: {{ include "sdk-jupyter-server.chart" . }}
+{{ include "sdk-jupyter-server.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,7 +45,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "synthesized-sdk.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "synthesized-sdk.name" . }}
+{{- define "sdk-jupyter-server.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "sdk-jupyter-server.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

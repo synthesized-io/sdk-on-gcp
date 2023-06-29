@@ -1,5 +1,5 @@
 apiVersion: v2
-name: synthesized-sdk
+name: sdk-jupyter-server
 description: The SDK generates high quality, privacy-preserving datasets for machine learning and data science use cases.
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -31,4 +31,4 @@ keywords:
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "v2.3"
+appVersion: "2.7.0"
