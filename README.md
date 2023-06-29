@@ -4,14 +4,14 @@ Synthesized Scientific Data Kit (SDK) is a comprehensive framework for generativ
 
 This delivery contains the SDK bundled up with a Jupyter notebook. This provides an easy platform to start working with synthetic data.
 
-Available on the GCP Cloud Marketplace: https://console.cloud.google.com/marketplace/product/synthesized-public/synthesized-sdk-notebook-byol
+Available on the GCP Cloud Marketplace: https://console.cloud.google.com/marketplace/product/synthesized-marketplace-public/synthesized-sdk-notebook-byol
 
 # Installation
 
 ## Quick install with Google Cloud Marketplace
 
 To install Synthesized SDK Jupyter Notebook to a Google Kubernetes Engine cluster via Google Cloud Marketplace, follow the
-[on-screen instructions](https://console.cloud.google.com/marketplace/product/synthesized-public/synthesized-sdk-notebook-byol).
+[on-screen instructions](https://console.cloud.google.com/marketplace/product/synthesized-marketplace-public/synthesized-sdk-notebook-byol).
 
 ## Command-line instructions
 
@@ -101,7 +101,7 @@ export TAG="2.7.0"
 Configure the container images:
 
 ```shell
-export IMAGE_REGISTRY="gcr.io/synthesized-public/sdk-jupyter-server"
+export IMAGE_REGISTRY="gcr.io/synthesized-marketplace-public/sdk-jupyter-server"
 ```
 
 Configure the Synthesized licence key:
@@ -195,8 +195,7 @@ kubectl port-forward \
 
 # Scaling
 
-This is a single-instance version of SDK Jupyter Notebook. It is not intended to be scaled
-up with its current configuration.
+This is a single-instance version of SDK Jupyter Notebook. It is not intended to be scaled out with its current configuration.
 
 # App metrics
 
