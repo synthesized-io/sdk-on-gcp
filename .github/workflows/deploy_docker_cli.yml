@@ -11,8 +11,9 @@ on:
 env:
   TAG: 2.7.0
 
-  REGISTRY: gcr.io/synthesized-public
+  REGISTRY: gcr.io/synthesized-marketplace-public
   APP_NAME: sdk-jupyter-server
+  MARKETPLACE_TOOLS_TAG: 0.11.0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -53,10 +54,16 @@ jobs:
         uses: docker/build-push-action@2eb1c1961a95fc15694676618e422e8ba1d63825
         with:
           context: .
+          build-args: |
+            REGISTRY=${{ env.REGISTRY }}
+            APP_INSTANCE_NAME=${{ env.APP_NAME }}
+            MARKETPLACE_TOOLS_TAG=${{ env.MARKETPLACE_TOOLS_TAG }}
+            CHART_NAME=${{ env.APP_INSTANCE_NAME }}
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.APP_NAME }}/deployer:${{ env.TAG }}
 #            ${{ steps.gcr-meta.outputs.tags }}
+
 
   build-and-push-tester:
     if: ${{ !contains(github.ref_name, '-') }} # Only run on final tags, i.e, "1.14.0" NOT "1.14.0-rc1"
