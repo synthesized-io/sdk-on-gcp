@@ -55,7 +55,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.APP_NAME }}/deployer:$TAG
+            ${{ env.REGISTRY }}/${{ env.APP_NAME }}/deployer:${{ env.TAG }}
 #            ${{ steps.gcr-meta.outputs.tags }}
 
   build-and-push-tester:
@@ -88,5 +88,5 @@ jobs:
           context: apptest/tester
           push: true
           tags: |
-            ${{ env.REGISTRY }}/tester:$TAG
+            ${{ env.REGISTRY }}/tester:${{ env.TAG }}
 #            ${{ steps.gcr-meta.outputs.tags }}
