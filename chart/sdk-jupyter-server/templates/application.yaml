@@ -6,6 +6,8 @@ metadata:
   labels:
     app: {{ .Release.Name }}
     name: {{ .Release.Name }}
+  annotations:
+    marketplace.cloud.google.com/deploy-info: '{"partner_id": "synthesized", "product_id": {{ .Chart.Name | quote }}, "partner_name": "Synthesized"}'
 spec:
   descriptor:
     type: SDK
