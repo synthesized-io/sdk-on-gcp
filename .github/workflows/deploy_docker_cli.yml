@@ -52,6 +52,7 @@ jobs:
             APP_INSTANCE_NAME=${{ env.APP_NAME }}
             MARKETPLACE_TOOLS_TAG=${{ env.MARKETPLACE_TOOLS_TAG }}
             CHART_NAME=${{ env.APP_INSTANCE_NAME }}
+            TAG=${{ github.ref_name }}
           push: true
           tags: |
             ${{ steps.gcr-meta.outputs.tags }}
