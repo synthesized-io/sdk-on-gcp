@@ -95,7 +95,7 @@ Set up the image tag.
 Example:
 
 ```shell
-export TAG="2.7.0"
+export TAG="2.7.6"
 ```
 
 Configure the container images:
@@ -187,7 +187,7 @@ kubectl port-forward \
 
 ## How to use Synthesized Jupyter Notebook
 
-* Open the demo notebook or create a new notebook
+* Open the demo notebook or create a new notebook. The password dor demo notebook: `synthesized123`.
 * Inside the notebook, if you did not set your license key earlier, ensure you set the license key by adding the following at the top: `import os; os.environ["SYNTHESIZED_KEY"] = <INSERT_KEY_HERE>`
 * Now synthesized can be imported into the notebook, data can be loaded, a synthesizer trained, and synthetic data generated as explained in the quickstart guide in [Synthesized’s docs](https://docs.synthesized.io/sdk/latest/getting_started/quickstarts/tabular)
 * After data has been generated, it can be saved to a permanent location using standard python libraries and functions. To save files to gcp for example follow instructions [here](https://cloud.google.com/appengine/docs/legacy/standard/python/googlecloudstorageclient/read-write-to-cloud-storage)
